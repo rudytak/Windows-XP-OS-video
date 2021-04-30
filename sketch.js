@@ -1,4 +1,5 @@
 var bg, icn, vid;
+var playVid = false;
 
 function preload() {
     bg = loadImage("background.png")
@@ -12,10 +13,38 @@ function setup() {
     var c = createCanvas(innerWidth - 5, innerHeight - 5);
     document.body.style.margin = "0px";
     document.body.style.overflow = "hidden";
-    print(bg, icn, vid)
 }
 
 function draw() {
-    image(bg, 0, 0, width, width / bg.width * bg.height)
-    image(icn, 327 * width / bg.width, 600 * height / bg.height, 150 * width / bg.width, 150 * width / bg.width)
+    var imW = width
+    var imH = width / bg.width * bg.height
+    image(bg, 0, 0, imW, imH)
+    image(icn, 327 * imW / bg.width, 525 * imH / bg.height, 150 * width / bg.width, 150 * width / bg.width)
+
+    if (playVid) {
+        vid.elt.style.display = "";
+        vid.size(imW, imH)
+        vid.elt.style.position = "absolute"
+        vid.play();
+    }
+}
+
+function mousePressed() {
+    var imW = width
+    var imH = width / bg.width * bg.height
+
+    var x = 327 * imW / bg.width
+    var y = 525 * imH / bg.height
+    var w = 150 * width / bg.width
+    var h = 150 * width / bg.width
+    var mx = mouseX
+    var my = mouseY
+
+    if (mx > x && mx < x + w && my > y && my < y + h) {
+        playVid = true;
+    }
+}
+
+function windowResized() {
+    resizeCanvas(innerWidth - 5, innerHeight - 5);
 }
